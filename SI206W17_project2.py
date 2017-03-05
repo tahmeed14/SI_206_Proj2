@@ -1,10 +1,11 @@
 ## SI 206 W17 - Project 2 
 
 ## COMMENT HERE WITH:
-## Your name:
+## Your name: Tahmeed Tureen
 ## Anyone you worked with on this project:
 
-## Below we have provided import statements, comments to separate out the parts of the project, instructions/hints/examples, and at the end, tests. See the PDF of instructions for more detail. 
+## Below we have provided import statements, comments to separate out the parts of the project, instructions/hints/examples, 
+## and at the end, tests. See the PDF of instructions for more detail. 
 ## You can check out the SAMPLE206project2_caching.json for an example of what your cache file might look like.
 
 ###########
@@ -51,12 +52,13 @@ except:
 
 ## For example: 
 ## find_urls("http://www.google.com is a great site") should return ["http://www.google.com"]
-## find_urls("I love looking at websites like http://etsy.com and http://instagram.com and stuff") should return ["http://etsy.com","http://instagram.com"]
+## find_urls("I love looking at websites like http://etsy.com and http://instagram.com and stuff") should return 
+## ["http://etsy.com","http://instagram.com"]
 ## find_urls("the internet is awesome #worldwideweb") should return [], empty list
 
 def find_urls(string_input): #accepts inputs that are strings (any)
 	url_list = re.findall(r'(http:\/\/[A-z0-9\/.]+|https:\/\/[A-z0-9\/.-?*]+)' , string_input)
-	print(url_list)
+	#print(url_list)
 	return url_list
 	
 
@@ -71,36 +73,92 @@ def find_urls(string_input): #accepts inputs that are strings (any)
 
 ## Start with this page: https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All  
 ## End with this page: https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11 
+# def get_umsi_data():
+# 	html_list = []
+# 	page1 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All"
+# 	page2 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=2"
+# 	page3 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=3"
+# 	page4 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=4" 
+# 	page5 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=5"
+# 	page6 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=6"
+# 	page7 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=7"
+# 	page8 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=8"
+# 	page9 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=9"
+# 	page10 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=10"
+# 	page11 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11"
+# 	pagelist = [page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11]
 
+# 	for i in pagelist:
+# 		base_url = i
+# 		umsi_data = reguests.get(base_url, headers={'User-Agent': 'SI_CLASS'})
+# 		unique_identifier = umsi_data.text
 
-
+# 		if unique_identifier in CACHE_FILE:
+# 			return unique_identifier
+# 		else:
+# 			umsi_html = requests.get(base_url, headers={'User-Agent': 'SI_CLASS'}).text
+# 			html_list.append(umsi_html)
 
 
 
 
 ## PART 2 (b) - Create a dictionary saved in a variable umsi_titles 
-## whose keys are UMSI people's names, and whose associated values are those people's titles, e.g. "PhD student" or "Associate Professor of Information"...
+## whose keys are UMSI people's names, and whose associated values are those people's titles, e.g. "PhD student" or "Associate Professor 
+## of Information"...
+page0 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All"
+page1 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=1"
+page2 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=2"
+page3 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=3"
+page4 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=4" 
+page5 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=5"
+page6 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=6"
+page7 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=7"
+page8 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=8"
+page9 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=9"
+page10 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=10"
+page11 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11"
+pagelist = [page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11]
+
+umsi_titles ={}
+
+for i in pagelist:
+	base_url = i
+	response = requests.get(base_url, headers={'User-Agent': 'SI_CLASS'})
+	htmldoc = response.text
+
+	soup = BeautifulSoup(htmldoc,"html.parser")
+	people = soup.find_all("div",{"class":"views-row"})
 
 
+#Code for part 3 above this line was given
 
+	for i in people:
+		list_names = i.find("div", {"property":"dc:title"}) #"property" is unique
+		list_titles = i.find("div", {"class":"field-name-field-person-titles"}) 
+	
+		umsi_titles[list_names.text] = list_titles.text
 
-
+# print("AYE YOOOOOOOOOOOOOOOOOOOOO")
+# print(sorted(umsi_titles.keys()))
 
 
 ## PART 3 (a) - Define a function get_five_tweets
 ## INPUT: Any string
-## Behavior: See instructions. Should search for the input string on twitter and get results. Should check for cached data, use it if possible, and if not, cache the data retrieved.
+## Behavior: See instructions. Should search for the input string on twitter and get results. Should check for cached data, use it if possible, 
+## and if not, cache the data retrieved.
 ## RETURN VALUE: A list of strings: A list of just the text of 5 different tweets that result from the search.
 
 
 
 
-## PART 3 (b) - Write one line of code to invoke the get_five_tweets function with the phrase "University of Michigan" and save the result in a variable five_tweets.
+## PART 3 (b) - Write one line of code to invoke the get_five_tweets function with the phrase "University of Michigan" and save the result in a 
+## variable five_tweets.
 
 
 
 
-## PART 3 (c) - Iterate over the five_tweets list, invoke the find_urls function that you defined in Part 1 on each element of the list, and accumulate a new list of each of the total URLs in all five of those tweets in a variable called tweet_urls_found. 
+## PART 3 (c) - Iterate over the five_tweets list, invoke the find_urls function that you defined in Part 1 on each element of the list, 
+## and accumulate a new list of each of the total URLs in all five of those tweets in a variable called tweet_urls_found. 
 
 
 
