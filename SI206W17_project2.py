@@ -117,7 +117,7 @@ page8 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_
 page9 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=9"
 page10 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=10"
 page11 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11"
-pagelist = [page0, page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11]
+pagelist = [page0, page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11] #for iterating purposes
 
 umsi_titles ={}
 
