@@ -105,38 +105,37 @@ def find_urls(string_input): #accepts inputs that are strings (any)
 ## PART 2 (b) - Create a dictionary saved in a variable umsi_titles 
 ## whose keys are UMSI people's names, and whose associated values are those people's titles, e.g. "PhD student" or "Associate Professor 
 ## of Information"...
-page0 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All"
-page1 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=1"
-page2 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=2"
-page3 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=3"
-page4 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=4" 
-page5 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=5"
-page6 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=6"
-page7 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=7"
-page8 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=8"
-page9 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=9"
-page10 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=10"
-page11 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11"
-pagelist = [page0, page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11] #for iterating purposes
+# page0 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=0"
+# page1 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=1"
+# page2 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=2"
+# page3 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=3"
+# page4 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=4" 
+# page5 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=5"
+# page6 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=6"
+# page7 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=7"
+# page8 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=8"
+# page9 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=9"
+# page10 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=10"
+# page11 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11"
+# pagelist = [page0, page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11] #for iterating purposes
 
 umsi_titles ={}
 
-for i in pagelist:
-	base_url = i
+for i in range(12): #since we have 11 pages, and because the range function starts from 0 we need it to be 12
+	base_url = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page="+str(i)
 	response = requests.get(base_url, headers={'User-Agent': 'SI_CLASS'})
 	htmldoc = response.text
 
 	soup = BeautifulSoup(htmldoc,"html.parser")
 	people = soup.find_all("div",{"class":"views-row"})
 
-
-#Code for part 3 above this line was given
-
 	for i in people:
 		list_names = i.find("div", {"property":"dc:title"}) #"property" is unique
 		list_titles = i.find("div", {"class":"field-name-field-person-titles"}) 
 	
 		umsi_titles[list_names.text] = list_titles.text
+
+
 
 # print("AYE YOOOOOOOOOOOOOOOOOOOOO")
 # print(sorted(umsi_titles.keys()))
