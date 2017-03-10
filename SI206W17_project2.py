@@ -74,59 +74,37 @@ def find_urls(string_input): #accepts inputs that are strings (any)
 ## Start with this page: https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All  
 ## End with this page: https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11 
 # def get_umsi_data():
-# 	html_list = []
-# 	page1 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All"
-# 	page2 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=2"
-# 	page3 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=3"
-# 	page4 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=4" 
-# 	page5 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=5"
-# 	page6 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=6"
-# 	page7 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=7"
-# 	page8 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=8"
-# 	page9 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=9"
-# 	page10 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=10"
-# 	page11 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11"
-# 	pagelist = [page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11]
 
-# 	for i in pagelist:
-# 		base_url = i
-# 		umsi_data = reguests.get(base_url, headers={'User-Agent': 'SI_CLASS'})
-# 		unique_identifier = umsi_data.text
+def get_umsi_data():
+	if "umsi_directory_data" in CACHE_DICTION:
+		return CACHE_DICTION["umsi_directory_data"]
 
-# 		if unique_identifier in CACHE_FILE:
-# 			return unique_identifier
-# 		else:
-# 			umsi_html = requests.get(base_url, headers={'User-Agent': 'SI_CLASS'}).text
-# 			html_list.append(umsi_html)
-
-
+	else:
+		umsi_directory_list=[]
+		for i in range(12): #since we have 11 pages, and because the range function starts from 0 we need it to be 12
+			base_url = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page="+str(i)
+			response = requests.get(base_url, headers={'User-Agent': 'SI_CLASS'})
+			page_html = response.text
+			umsi_directory_list.append(page_html)
+		CACHE_DICTION["umsi_directory_data"] = umsi_directory_list
+		f = open(CACHE_FILE, "w")
+		f.write(json.dumps(CACHE_DICTION))
+		f.close()
+		return CACHE_DICTION["umsi_directory_data"]
 
 
 ## PART 2 (b) - Create a dictionary saved in a variable umsi_titles 
 ## whose keys are UMSI people's names, and whose associated values are those people's titles, e.g. "PhD student" or "Associate Professor 
 ## of Information"...
-# page0 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=0"
-# page1 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=1"
-# page2 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=2"
-# page3 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=3"
-# page4 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=4" 
-# page5 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=5"
-# page6 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=6"
-# page7 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=7"
-# page8 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=8"
-# page9 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=9"
-# page10 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=10"
-# page11 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11"
-# pagelist = [page0, page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11] #for iterating purposes
 
 umsi_titles ={}
 
-for i in range(12): #since we have 11 pages, and because the range function starts from 0 we need it to be 12
-	base_url = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page="+str(i)
-	response = requests.get(base_url, headers={'User-Agent': 'SI_CLASS'})
-	htmldoc = response.text
+for j in get_umsi_data(): 
+	# base_url = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page="+str(i)
+	# response = requests.get(base_url, headers={'User-Agent': 'SI_CLASS'})
+	# htmldoc = response.text
 
-	soup = BeautifulSoup(htmldoc,"html.parser")
+	soup = BeautifulSoup(j,"html.parser")
 	people = soup.find_all("div",{"class":"views-row"})
 
 	for i in people:
@@ -134,7 +112,6 @@ for i in range(12): #since we have 11 pages, and because the range function star
 		list_titles = i.find("div", {"class":"field-name-field-person-titles"}) 
 	
 		umsi_titles[list_names.text] = list_titles.text
-
 
 
 # print("AYE YOOOOOOOOOOOOOOOOOOOOO")
@@ -229,3 +206,19 @@ class PartThree(unittest.TestCase):
 
 if __name__ == "__main__":
 	unittest.main(verbosity=2)
+
+
+
+# page0 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=0"
+# page1 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=1"
+# page2 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=2"
+# page3 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=3"
+# page4 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=4" 
+# page5 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=5"
+# page6 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=6"
+# page7 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=7"
+# page8 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=8"
+# page9 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=9"
+# page10 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=10"
+# page11 = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=All&page=11"
+# pagelist = [page0, page1, page2, page3, page4, page5, page6, page7, page8, page9, page10, page11] #for iterating purposes
