@@ -1,8 +1,8 @@
 ## SI 206 W17 - Project 2 
 
 ## COMMENT HERE WITH:
-## Your name: Tahmeed Tureen
-## Anyone you worked with on this project:
+## Your name: Tahmeed Tureen 
+## Anyone you worked with on this project: Cam Newman, Lindy Villeponteau, Daniel Schorin
 
 ## Below we have provided import statements, comments to separate out the parts of the project, instructions/hints/examples, 
 ## and at the end, tests. See the PDF of instructions for more detail. 
@@ -145,7 +145,7 @@ def get_five_tweets(word):
 	tweet_texts = []
 	for tweet in desired_tweets:
 		tweet_texts.append("TEXT:" + tweet['text'])
-		tweet_texts.append("\n")
+		#tweet_texts.append("\n")
 
 	return(tweet_texts[:5])
 
@@ -176,7 +176,15 @@ five_tweets = get_five_tweets("University of Michigan")
 
 
 ## PART 3 (c) - Iterate over the five_tweets list, invoke the find_urls function that you defined in Part 1 on each element of the list, 
-## and accumulate a new list of each of the total URLs in all five of those tweets in a variable called tweet_urls_found. 
+## and accumulate a new list of each of the total URLs in all five of those tweets in a variable called tweet_urls_found.
+
+tweet_urls_found = []
+
+for t in five_tweets:	
+	x = find_urls(t)
+	if x:
+		tweet_urls_found.append(tuple(x))
+
 
 
 
