@@ -173,6 +173,9 @@ def get_five_tweets(word):
 ## PART 3 (b) - Write one line of code to invoke the get_five_tweets function with the phrase "University of Michigan" and save the result in a 
 ## variable five_tweets.
 five_tweets = get_five_tweets("University of Michigan")
+# for i in five_tweets:
+# 	print(i)
+# print(five_tweets)
 
 
 ## PART 3 (c) - Iterate over the five_tweets list, invoke the find_urls function that you defined in Part 1 on each element of the list, 
@@ -184,10 +187,8 @@ for t in five_tweets:
 	x = find_urls(t)
 	if x:
 		tweet_urls_found.append(tuple(x))
-
-
-
-
+		print(tweet_urls_found)
+		print(len(tweet_urls_found))
 
 
 ########### TESTS; DO NOT CHANGE ANY CODE BELOW THIS LINE! ###########
