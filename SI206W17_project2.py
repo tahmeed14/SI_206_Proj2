@@ -89,9 +89,9 @@ def get_umsi_data():
 			page_html = response.text
 			umsi_directory_list.append(page_html)
 		CACHE_DICTION["umsi_directory_data"] = umsi_directory_list
-		f = open(CACHE_FILE, "w")
-		f.write(json.dumps(CACHE_DICTION))
-		f.close()
+		# f = open(CACHE_FILE, "w")
+		# f.write(json.dumps(CACHE_DICTION))
+		# f.close()
 		return CACHE_DICTION["umsi_directory_data"]
 
 
@@ -131,7 +131,7 @@ def get_five_tweets(word):
 
 	else:
 		#print("Accessing Twitter Website")
-		tw_search_results = api.search(q = word)
+		tw_search_results = api.search(q = word, count = 5)
 		desired_tweets = tw_search_results["statuses"]
 
 		CACHE_DICTION[twitter_identifier] = desired_tweets
