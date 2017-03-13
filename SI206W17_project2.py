@@ -43,7 +43,7 @@ try:
 	f = open(CACHE_FILE, "r")
 	cache_file = f.read()
 	CACHE_DICTION = json.loads(cache_file)
-	cache_file.close()
+	f.close()
 except:
 	CACHE_DICTION = {}
 
@@ -89,9 +89,9 @@ def get_umsi_data():
 			page_html = response.text
 			umsi_directory_list.append(page_html)
 		CACHE_DICTION["umsi_directory_data"] = umsi_directory_list
-		# f = open(CACHE_FILE, "w")
-		# f.write(json.dumps(CACHE_DICTION))
-		# f.close()
+		f = open(CACHE_FILE, "w")
+		f.write(json.dumps(CACHE_DICTION))
+		f.close()
 		return CACHE_DICTION["umsi_directory_data"]
 
 
