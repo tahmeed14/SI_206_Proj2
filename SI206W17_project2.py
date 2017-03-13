@@ -123,15 +123,14 @@ for j in get_umsi_data():
 ## RETURN VALUE: A list of strings: A list of just the text of 5 different tweets that result from the search.
 
 def get_five_tweets(word):
-	twitter_identifier = "twitter_University of Michigan"
+	twitter_identifier = "twitter_{}".format(word)
+	
 	if twitter_identifier in CACHE_DICTION:
 		#print("Accessing Cached Data")
-		#print('\n')
 		desired_tweets = CACHE_DICTION[twitter_identifier]
 
 	else:
 		#print("Accessing Twitter Website")
-		#print('\n')
 		tw_search_results = api.search(q = word)
 		desired_tweets = tw_search_results["statuses"]
 
@@ -144,51 +143,36 @@ def get_five_tweets(word):
 
 	tweet_texts = []
 	for tweet in desired_tweets:
-		tweet_texts.append("TEXT:" + tweet['text'])
-		#tweet_texts.append("\n")
+		#tweet_texts.append("TEXT:" + tweet['text'])
+		tweet_texts.append(tweet['text'])
 
 	return(tweet_texts[:5])
-
-# f = open("206project2_caching.json","r")
-# s = f.read()
-# f.close()
-# opened = json.loads(s)
-
-# if "twitter_University of Michigan" in s:
-# 	print("TRUTH")
-# else:
-# 	print("NAH")
-
-# if "twitter_University of Michigan" in opened:
-# 	print("TRUTH")
-# else:
-# 	print("FALSE")
-
-
-	# if twitter_identifier in CACHE_DICTION:
-	# 	print("yes")
-	# 	print(twitter_identifier)
-
+	
 
 ## PART 3 (b) - Write one line of code to invoke the get_five_tweets function with the phrase "University of Michigan" and save the result in a 
 ## variable five_tweets.
-five_tweets = get_five_tweets("University of Michigan")
-# for i in five_tweets:
-# 	print(i)
-# print(five_tweets)
 
+five_tweets = get_five_tweets("University of Michigan")
+for i in five_tweets:
+	print(i)
 
 ## PART 3 (c) - Iterate over the five_tweets list, invoke the find_urls function that you defined in Part 1 on each element of the list, 
 ## and accumulate a new list of each of the total URLs in all five of those tweets in a variable called tweet_urls_found.
 
 tweet_urls_found = []
 
-for t in five_tweets:	
-	x = find_urls(t)
-	if x:
-		tweet_urls_found.append(tuple(x))
-		print(tweet_urls_found)
-		print(len(tweet_urls_found))
+# for t in five_tweets:	
+# 	x = find_urls(t)
+# 	if x:
+# 		tweet_urls_found.append(tuple(x))
+
+for i in range(5):
+	x = find_urls(five_tweets[i])
+	for y in x:
+		tweet_urls_found.append(y)
+		
+		# print(tweet_urls_found)
+		# print(len(tweet_urls_found))
 
 
 ########### TESTS; DO NOT CHANGE ANY CODE BELOW THIS LINE! ###########
