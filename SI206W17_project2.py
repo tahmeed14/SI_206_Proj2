@@ -153,8 +153,8 @@ def get_five_tweets(word):
 ## variable five_tweets.
 
 five_tweets = get_five_tweets("University of Michigan")
-for i in five_tweets:
-	print(i)
+# for i in five_tweets:
+# 	print(i)
 
 ## PART 3 (c) - Iterate over the five_tweets list, invoke the find_urls function that you defined in Part 1 on each element of the list, 
 ## and accumulate a new list of each of the total URLs in all five of those tweets in a variable called tweet_urls_found.
@@ -167,9 +167,9 @@ tweet_urls_found = []
 # 		tweet_urls_found.append(tuple(x))
 
 for i in range(5):
-	x = find_urls(five_tweets[i])
-	for y in x:
-		tweet_urls_found.append(y)
+	x = find_urls(five_tweets[i]) #do it one by one
+	for y in x: 
+		tweet_urls_found.append(y) #appends strings!!!! finally solved it
 		
 		# print(tweet_urls_found)
 		# print(len(tweet_urls_found))
